@@ -1,0 +1,17 @@
+version: "3"
+services:
+  dev1:
+    image: signate/runtime-gpu:base_env
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    container_name: analysis_axell
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/workspace
+    tty: true

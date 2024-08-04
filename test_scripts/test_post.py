@@ -23,8 +23,8 @@ def onnx_model_generation():
     model = Bicubic()
     model.to(device)
 
-    model.to(torch.device("cpu"))
-    dummy_input = torch.randn(1, 3, 128, 128, device="cpu")
+    model.to(torch.device("cuda"))
+    dummy_input = torch.randn(1, 3, 128, 128, device="cuda")
     torch.onnx.export(model, dummy_input, "../onnx_models/model.onnx", 
                     opset_version=17,
                     input_names=["input"],

@@ -1,0 +1,18 @@
+defaults:
+  - model: espcn  # デフォルトで使用するモデルを指定
+
+dataset:
+  train_data_path: "F:/Axell AI Contest 2024/train"
+  original_val_data_path: "F:/Axell AI Contest 2024/validation/original"
+  0.25x_val_data_path: "F:/Axell AI Contest 2024/validation/0.25x"
+
+
+train:
+  batch_size: 50
+  num_workers: 4
+  num_epochs: 100
+  learning_rate: 1e-3
+  use_gpu: true
+
+wandb:
+  project_name: "super_resolution"
