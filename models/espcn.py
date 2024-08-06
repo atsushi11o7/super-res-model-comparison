@@ -2,9 +2,9 @@ import torch
 from torch import nn
 
 class ESPCN(nn.Module):
-    def __init__(self) -> None:
+    def __init__(self, scale=4):
         super().__init__()
-        self.scale = 4
+        self.scale = scale
         self.conv_1 = nn.Conv2d(in_channels=1, out_channels=64, kernel_size=5, padding=2)
         nn.init.normal_(self.conv_1.weight, mean=0, std=0.001)
         nn.init.zeros_(self.conv_1.bias)
@@ -25,12 +25,13 @@ class ESPCN(nn.Module):
 
         self.pixel_shuffle = nn.PixelShuffle(self.scale)
 
-    def forward(self, X_in: torch.Tensor) -> torch.Tensor:
-        X = X_in.reshape(-1, 1, X_in.shape[-2], X_in.shape[-1])
-        X = self.act(self.conv_1(X))
-        X = self.act(self.conv_2(X))
-        X = self.act(self.conv_3(X))
-        X = self.conv_4(X)
-        X = self.pixel_shuffle(X)
-        X = X.reshape(-1, 3, X.shape[-2], X.shape[-1])
-        return torch.clip(X, 0.0, 1.0)
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = x.reshape(-1, 1, x.shape[-2], x.shape[-1])
+        x = self.act(self.conv_1(x))
+        x = self.act(self.conv_2(x))
+        x = self.act(self.conv_3(x))
+        x = self.conv_4(x)
+        x = self.pixel_shuffle(x)
+        x = x.reshape(-1, 3, x.shape[-2], x.shape[-1])
+        x = torch.clip(x, 0.0, 1.0)
+        return x

@@ -1,8 +1,0 @@
-# config/model/espcn.yaml
-model:
-  _target_: "src.model.ESPCN"
-  scale: 4  # ESPCN特有の設定例
-
-train:
-  learning_rate: 1e-3
-  num_epochs: 100

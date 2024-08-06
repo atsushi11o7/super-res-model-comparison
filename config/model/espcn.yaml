@@ -1,0 +1,3 @@
+model:
+  name: ESPCN
+  scale: 4  # ESPCN特有の設定例

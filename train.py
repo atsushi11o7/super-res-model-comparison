@@ -1,33 +1,46 @@
-import hydra
-from omegaconf import DictConfig
+import torch
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
-from .lit_model import LitModel
-from .datamodules.datamodule import SRDataModule
+from datamodule import SuperResolutionDataModule
+from litmodules.lit_espcn import LitESPCN
+import hydra
+from omegaconf import DictConfig
 
-@hydra.main(config_path="config", config_name="config")
+@hydra.main(config_path="config", config_name="config", version_base=None)
 def main(cfg: DictConfig):
-    # モデルの初期化
-    model = LitModel(cfg)
+
+    # Setup wandb logger
+    wandb_logger = WandbLogger(project=cfg.wandb.project_name)
     
-    # データモジュールの初期化
-    data_module = SRDataModule(
-        train_dir=cfg.paths.train_dir,
-        val_dir=cfg.paths.val_dir,
+    # Setup data module
+    data_module = SuperResolutionDataModule(
+        train_dir=cfg.dataset.train_data_path,
+        val_high_dir=cfg.dataset.original_val_data_path,
+        val_low_dir=cfg.dataset.quarter_val_data_path,
         batch_size=cfg.train.batch_size,
         num_workers=cfg.train.num_workers
     )
     
-    # Wandb Loggerの初期化
-    wandb_logger = WandbLogger(project=cfg.wandb.project_name)
-    
-    # トレーナーの初期化と学習開始
-    trainer = pl.Trainer(
-        max_epochs=cfg.train.num_epochs,
-        logger=wandb_logger,
-        gpus=1 if cfg.train.use_gpu else 0
+    # Setup model
+    model = LitESPCN(
+        learning_rate=cfg.train.learning_rate,
+        milestones=cfg.train.milestones,
+        gamma=cfg.train.gamma,
+        output_dir=cfg.train.output_dir
     )
     
+    # Setup trainer
+    accelerator = "gpu" if torch.cuda.is_available() else "cpu"
+    devices = 1 if torch.cuda.is_available() else None
+    trainer = pl.Trainer(
+        accelerator=accelerator,
+        devices=devices,
+        max_epochs=cfg.train.num_epoch,
+        logger=wandb_logger,
+        default_root_dir=cfg.train.log_dir,
+    )
+    
+    # Start training
     trainer.fit(model, data_module)
 
 if __name__ == "__main__":

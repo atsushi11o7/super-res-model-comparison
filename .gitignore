@@ -1,1 +1,7 @@
 /data
+/log
+/onnx_models
+/output
+/outputs
+/wandb
+/super_res_model_comparison
