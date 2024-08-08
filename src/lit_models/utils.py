@@ -3,6 +3,18 @@ import cv2
 import numpy as np
 from pathlib import Path
 from torchvision import transforms
+from src.models import ESPCN, Swin2SR
+
+
+def get_model(name, **kwargs):
+    if name == "ESPCN":
+        return ESPCN(**kwargs)
+
+    elif name == "Swin2SR":
+        return Swin2SR()
+
+    else:
+        raise ValueError(f"Unsupported model: {name}")
 
 def calc_psnr(output: torch.Tensor, high_resolution_image: torch.Tensor):
     psnr_transform = transforms.ToPILImage()

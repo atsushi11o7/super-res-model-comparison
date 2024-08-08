@@ -1,7 +1,7 @@
 /data
 /log
-/onnx_models
-/output
+/models
+/output_models
 /outputs
 /wandb
-/super_res_model_comparison
+/super-res-model-comparison

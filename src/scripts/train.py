@@ -1,12 +1,12 @@
 import torch
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
-from datamodule import SuperResolutionDataModule
-from litmodules.lit_espcn import LitESPCN
+from src.datamodules.datamodule import SuperResolutionDataModule
+from src.lit_models import LitModel
 import hydra
 from omegaconf import DictConfig
 
-@hydra.main(config_path="config", config_name="config", version_base=None)
+@hydra.main(config_path="../../config", config_name="config", version_base=None)
 def main(cfg: DictConfig):
 
     # Setup wandb logger
@@ -22,13 +22,16 @@ def main(cfg: DictConfig):
     )
     
     # Setup model
-    model = LitESPCN(
-        learning_rate=cfg.train.learning_rate,
-        milestones=cfg.train.milestones,
-        gamma=cfg.train.gamma,
+    model = LitModel(
+        model_config=cfg.model,
+        loss_config=cfg.loss,
+        optimizer_config=cfg.optimizer,
+        scheduler_config=cfg.scheduler,
         output_dir=cfg.train.output_dir
     )
     
+    torch.cuda.empty_cache()
+
     # Setup trainer
     accelerator = "gpu" if torch.cuda.is_available() else "cpu"
     devices = 1 if torch.cuda.is_available() else None
@@ -37,7 +40,7 @@ def main(cfg: DictConfig):
         devices=devices,
         max_epochs=cfg.train.num_epoch,
         logger=wandb_logger,
-        default_root_dir=cfg.train.log_dir,
+        default_root_dir=cfg.train.log_dir
     )
     
     # Start training
