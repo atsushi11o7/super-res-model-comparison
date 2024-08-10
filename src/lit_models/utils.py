@@ -11,7 +11,7 @@ def get_model(name, **kwargs):
         return ESPCN(**kwargs)
 
     elif name == "Swin2SR":
-        return Swin2SR()
+        return Swin2SR(**kwargs)
 
     else:
         raise ValueError(f"Unsupported model: {name}")

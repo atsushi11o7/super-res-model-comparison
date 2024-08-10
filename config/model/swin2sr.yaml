@@ -1,1 +1,2 @@
 name: "Swin2SR"
+model_name: "caidas/swin2SR-classical-sr-x4-64"
