@@ -4,13 +4,16 @@ defaults:
   - loss: mseloss
   - optimizer: adam
   - scheduler: steplr
+  - experiment: null
 
 train:
-  batch_size: 1
+  batch_size: 10
   num_workers: 0
-  num_epoch: 1
+  num_epoch: 40
   log_dir: log/
-  output_dir: models/swin2sr/
+  output_dir: models/espcn/
+  weights_path: null
+  ssim_loss_alpha: null
 
 dataset:
   train_data_path: "data/train"
@@ -18,4 +21,5 @@ dataset:
   quarter_val_data_path: "data/validation/0.25x"
 
 wandb:
-  project_name: "super-res-model-comparison"
+  project: "super-res-model-comparison"
+  name: "espcn-40-epochs"

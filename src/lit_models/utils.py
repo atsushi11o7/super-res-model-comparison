@@ -3,12 +3,21 @@ import cv2
 import numpy as np
 from pathlib import Path
 from torchvision import transforms
-from src.models import ESPCN, Swin2SR
+from src.models import ESPCN, SRCNN, FSRCNN, VDSR, Swin2SR
 
 
 def get_model(name, **kwargs):
     if name == "ESPCN":
         return ESPCN(**kwargs)
+
+    elif name == "SRCNN":
+        return SRCNN(**kwargs)
+
+    elif name == "FSRCNN":
+        return FSRCNN(**kwargs)
+
+    elif name == "VDSR":
+        return VDSR(**kwargs)
 
     elif name == "Swin2SR":
         return Swin2SR(**kwargs)
@@ -28,7 +37,7 @@ def calc_psnr(output: torch.Tensor, high_resolution_image: torch.Tensor):
 def to_onnx(model, output_dir):
     model.to(torch.device("cpu"))
     dummy_input = torch.randn(1, 3, 128, 128, device="cpu")
-    onnx_path = Path(output_dir) / "model.onnx"
+    onnx_path = output_dir / "model.onnx"
     torch.onnx.export(model, dummy_input, onnx_path, 
                         opset_version=17,
                         input_names=["input"],

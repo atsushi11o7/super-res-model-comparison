@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - override /loss: mseloss
+
+train:
+  output_dir: models/espcn/mse_40
+
+wandb:
+  name: "espcn-40-epochs"

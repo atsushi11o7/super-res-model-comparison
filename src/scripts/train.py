@@ -10,7 +10,10 @@ from omegaconf import DictConfig
 def main(cfg: DictConfig):
 
     # Setup wandb logger
-    wandb_logger = WandbLogger(project=cfg.wandb.project_name)
+    wandb_logger = WandbLogger(
+        project=cfg.wandb.project,
+        name=cfg.wandb.name,
+        )
     
     # Setup data module
     data_module = SuperResolutionDataModule(
@@ -20,14 +23,16 @@ def main(cfg: DictConfig):
         batch_size=cfg.train.batch_size,
         num_workers=cfg.train.num_workers
     )
-    
+
     # Setup model
     model = LitModel(
         model_config=cfg.model,
         loss_config=cfg.loss,
         optimizer_config=cfg.optimizer,
         scheduler_config=cfg.scheduler,
-        output_dir=cfg.train.output_dir
+        output_dir=cfg.train.output_dir,
+        weights_path=cfg.train.weights_path,
+        ssim_loss_alpha=cfg.train.ssim_loss_alpha,
     )
     
     torch.cuda.empty_cache()

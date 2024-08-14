@@ -1,0 +1,4 @@
+name: "VDSR"
+scale_factor: 4
+num_channels: 3
+depth: 10

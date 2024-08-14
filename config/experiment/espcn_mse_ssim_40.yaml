@@ -1,0 +1,11 @@
+# @package _global_
+
+defaults:
+  - override /loss: mseloss
+
+train:
+  output_dir: models/espcn/mse_ssim_40
+  ssim_loss_alpha: 0.3
+
+wandb:
+  name: "espcn-test"

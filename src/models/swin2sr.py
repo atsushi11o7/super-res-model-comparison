@@ -1,7 +1,8 @@
 import torch
-from torch import nn
+import torch.nn as nn
 import torch.nn.functional as F
 from transformers import AutoImageProcessor, Swin2SRForImageSuperResolution
+
 
 class Swin2SR(nn.Module):
     def __init__(self, model_name="caidas/swin2SR-classical-sr-x4-64"):

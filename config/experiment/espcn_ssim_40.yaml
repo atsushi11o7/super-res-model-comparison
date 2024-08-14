@@ -1,0 +1,11 @@
+# @package _global_
+
+defaults:
+  - override /loss: mseloss
+
+train:
+  output_dir: models/espcn/ssim_40
+  ssim_loss_alpha: 1
+
+wandb:
+  name: "espcn-40-epochs"

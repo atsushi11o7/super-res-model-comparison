@@ -1,0 +1,6 @@
+name: "FSRCNN"
+scale_factor: 4
+num_channels: 3
+d: 56
+s: 12
+m: 4
