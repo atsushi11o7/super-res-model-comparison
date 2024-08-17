@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - override /model: fsrcnn
+
+train:
+  output_dir: models/fsrcnn/40epochs
+
+wandb:
+  name: "fsrcnn-40-epochs"

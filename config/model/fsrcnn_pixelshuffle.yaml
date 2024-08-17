@@ -1,6 +1,6 @@
-name: "FSRCNN"
+name: "FSRCNNWithPixelShuffle"
 scale_factor: 4
 num_channels: 3
 d: 56
-s: 16
+s: 12
 m: 4

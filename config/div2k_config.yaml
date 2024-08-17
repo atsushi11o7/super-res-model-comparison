@@ -1,0 +1,41 @@
+defaults:
+  - _self_
+  - model: espcn
+  - loss: mseloss
+  - optimizer: adam
+  - scheduler: steplr
+  - experiment: null
+
+train:
+  batch_size: 10
+  num_workers: 0
+  num_epoch: 20
+  log_dir: log/
+  output_dir: models/div2k/espcn/
+  weights_path: null
+  ssim_loss_alpha: null
+
+dataset:
+  # トレーニングデータのパスを指定
+  train_data_path:
+    hr: "data/DIV2K/DIV2K_train_HR"
+    lr_dirs:
+      - "data/DIV2K/DIV2K_train_LR_bicubic/X4"
+      - "data/DIV2K/DIV2K_train_LR_mild"
+      - "data/DIV2K/DIV2K_train_LR_wild"
+      - "data/DIV2K/DIV2K_train_LR_difficult"
+      - "data/DIV2K/DIV2K_train_LR_unknown/X4"
+  
+  # バリデーションデータのパスを指定
+  val_data_path:
+    hr: "data/DIV2K/DIV2K_valid_HR"
+    lr_dirs:
+      - "data/DIV2K/DIV2K_valid_LR_bicubic/X4"
+      - "data/DIV2K/DIV2K_valid_LR_mild"
+      - "data/DIV2K/DIV2K_valid_LR_wild"
+      - "data/DIV2K/DIV2K_valid_LR_difficult"
+      - "data/DIV2K/DIV2K_valid_LR_unknown/X4"
+
+wandb:
+  project: "super-res-model-comparison"
+  name: "div2k-espcn-40-epochs"

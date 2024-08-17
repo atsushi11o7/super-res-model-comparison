@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - override /model: swin2sr
+
+train:
+  output_dir: models/swin2sr/40epochs
+
+wandb:
+  name: "swin2sr-40-epochs"

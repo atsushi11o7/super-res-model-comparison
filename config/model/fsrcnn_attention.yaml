@@ -1,4 +1,4 @@
-name: "FSRCNN"
+name: "FSRCNNWithAttention"
 scale_factor: 4
 num_channels: 3
 d: 56

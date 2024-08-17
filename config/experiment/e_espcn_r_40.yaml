@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - override /model: e_espcn_r
+
+train:
+  output_dir: models/e_espcn_2r_32/40epochs
+
+wandb:
+  name: "e_espcn_2r-40-epochs_32"

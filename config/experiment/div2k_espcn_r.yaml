@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - override /model: e_espcn_r
+
+train:
+  output_dir: models/div2k/espcn_r/20
+
+wandb:
+  name: "div2k-espcn-r-20-epochs"

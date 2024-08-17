@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - override /model: fsrcnn_attention
+
+train:
+  output_dir: models/fsrcnn_attention/40epochs
+
+wandb:
+  name: "fsrcnn-attention-40-epochs"

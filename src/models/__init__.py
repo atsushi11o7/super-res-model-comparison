@@ -1,4 +1,4 @@
-from .espcn import ESPCN
-from .srcnn import SRCNN, FSRCNN
+from .espcn import ESPCN, EnhancedESPCNWithResiduals
+from .srcnn import SRCNN, FSRCNN, FSRCNNWithPixelShuffle, FSRCNNWithAttention
 from .vdsr import VDSR
-from .swin2sr import Swin2SR
+from .swinsr import SwinSR, Swin2SR

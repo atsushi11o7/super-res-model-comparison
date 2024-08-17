@@ -3,21 +3,43 @@ import cv2
 import numpy as np
 from pathlib import Path
 from torchvision import transforms
-from src.models import ESPCN, SRCNN, FSRCNN, VDSR, Swin2SR
+from src.models import (
+    ESPCN,
+    EnhancedESPCNWithResiduals,
+    SRCNN,
+    FSRCNN,
+    FSRCNNWithPixelShuffle,
+    FSRCNNWithAttention,
+    VDSR,
+    SwinSR,
+    Swin2SR,
+)
 
 
 def get_model(name, **kwargs):
     if name == "ESPCN":
         return ESPCN(**kwargs)
 
+    elif name == "EnhancedESPCNWithResiduals":
+        return EnhancedESPCNWithResiduals(**kwargs)
+
     elif name == "SRCNN":
         return SRCNN(**kwargs)
 
     elif name == "FSRCNN":
         return FSRCNN(**kwargs)
+    
+    elif name == "FSRCNNWithPixelShuffle":
+        return FSRCNNWithPixelShuffle(**kwargs)
+
+    elif name == "FSRCNNWithAttention":
+        return FSRCNNWithAttention(**kwargs)
 
     elif name == "VDSR":
         return VDSR(**kwargs)
+
+    elif name == "SwinSR":
+        return SwinSR(**kwargs)
 
     elif name == "Swin2SR":
         return Swin2SR(**kwargs)

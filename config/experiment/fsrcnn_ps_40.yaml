@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - override /model: fsrcnn_pixelshuffle
+
+train:
+  output_dir: models/fsrcnn_ps/40epochs
+
+wandb:
+  name: "fsrcnn_ps-40-epochs"
