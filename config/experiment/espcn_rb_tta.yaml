@@ -1,0 +1,16 @@
+# @package _global_
+
+defaults:
+  - override /model: espcn_rb_tta
+  #- override /loss: l1loss
+  - override /optimizer: adam
+  - override /datamodule: normal
+
+train:
+  batch_size: 1
+  num_epoch: 50
+  output_dir: models/espcn_rb_tta/base
+  weights_path: "models/espcn_rb/tta_tast_/checkpoints/epoch=49-val_psnr=28.1491.ckpt"
+
+wandb:
+  name: "espcn-rb-tta-epochs"

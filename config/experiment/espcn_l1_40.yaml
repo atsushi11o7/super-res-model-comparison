@@ -1,10 +1,10 @@
 # @package _global_
 
 defaults:
-  - override /loss: mseloss
+  - override /loss: l1loss
 
 train:
-  output_dir: models/espcn/mse_40_nt
+  output_dir: models/espcn/l1_40
 
 wandb:
   name: "espcn-40-epochs"

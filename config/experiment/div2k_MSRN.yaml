@@ -1,0 +1,13 @@
+# @package _global_
+
+defaults:
+  - override /model: MSRN
+  - override /loss: mseloss
+
+train:
+  num_epoch: 20
+  output_dir: models/div2k/MSRN_mse_100_20
+  weights_path: models/div2k/MSRN_mse_100/model.pth
+
+wandb:
+  name: "div2k-MSRN-mse-100-epochs"

@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - override /model: espcn_ps2
+  - override /loss: exppsnrloss
+  - override /optimizer: sgd
+
+train:
+  num_epoch: 50
+  output_dir: models/espcn_ps2/50-50-50
+  weights_path: "models/espcn_ps2/50-50/checkpoints/epoch=48-val_psnr=27.5673.ckpt"
+
+wandb:
+  name: "espcn-ps2-50-50-epochs"

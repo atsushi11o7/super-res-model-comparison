@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - override /model: espcn_rb_ca
+  - override /loss: l1loss
+  - override /optimizer: sgd
+
+train:
+  num_epoch: 50
+  output_dir: models/espcn_rb_ca/v4
+  weights_path: "models/espcn_rb_ca/150_50_adamw_v3/checkpoints/epoch=04-val_psnr=27.9797.ckpt"
+
+wandb:
+  name: "espcn-v4-epochs"

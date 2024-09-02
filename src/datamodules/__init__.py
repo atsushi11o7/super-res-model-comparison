@@ -1,0 +1,2 @@
+from .bicubic_datamodule import BicubicSuperResolutionDataModule
+from .datamodule import SuperResolutionDataModule

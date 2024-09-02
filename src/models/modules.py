@@ -48,14 +48,10 @@ class ChannelAttention(nn.Module):
     def __init__(self, in_channels, reduction_ratio=16):
         super(ChannelAttention, self).__init__()
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
-        self.fc1 = nn.Conv2d(in_channels, in_channels // reduction_ratio, kernel_size=1, padding=0, bias=True)
-        self.relu = nn.ReLU(inplace=True)
-        self.fc2 = nn.Conv2d(in_channels // reduction_ratio, in_channels, kernel_size=1, padding=0, bias=True)
-        self.sigmoid = nn.Sigmoid()
 
         self.fc = nn.Sequential(
             nn.Conv2d(in_channels, in_channels // reduction_ratio, kernel_size=1, bias=True),
-            nn.ReLU(inplace=True),
+            nn.ReLU(),
             nn.Conv2d(in_channels // reduction_ratio, in_channels, kernel_size=1, bias=True),
             nn.Sigmoid()
         )

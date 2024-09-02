@@ -3,7 +3,7 @@ import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
 from src.datamodules import BicubicSuperResolutionDataModule, SuperResolutionDataModule
-from src.lit_models import LitModel
+from src.lit_models import LitModelWithDistillation
 from pathlib import Path
 import hydra
 from omegaconf import DictConfig
@@ -45,7 +45,7 @@ def main(cfg: DictConfig):
         raise ValueError(f"Unknown datamodule type: {cfg.datamodule.type}")
 
     # Setup model
-    model = LitModel(
+    model = LitModelWithDistillation(
         model_config=cfg.model,
         loss_config=cfg.loss,
         optimizer_config=cfg.optimizer,
@@ -107,10 +107,11 @@ def main(cfg: DictConfig):
     if best_model_path:
         checkpoint = torch.load(best_model_path)
         state_dict = checkpoint['state_dict']
-        new_state_dict = {}
-        for k, v in state_dict.items():
-            name = k.replace('model.', '')
-            new_state_dict[name] = v
+        #new_state_dict = {}
+        #for k, v in state_dict.items():
+            #name = k.replace('model.', '')
+            #new_state_dict[name] = v
+        new_state_dict = {k.replace('model.', ''): v for k, v in state_dict.items() if k.startswith('model.')}
         save_model.load_state_dict(new_state_dict)
         print(f"Model weights loaded from {best_model_path}")
 

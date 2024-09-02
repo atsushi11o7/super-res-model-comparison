@@ -1,10 +1,16 @@
 import torch
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
-from src.datamodules.div2k_datamodule import SuperResolutionDataModule
+from pytorch_lightning.callbacks import ModelCheckpoint
+from datamodules.datamodule import SuperResolutionDataModule
 from src.lit_models import LitModel
+from pathlib import Path
 import hydra
 from omegaconf import DictConfig
+
+
+from src.lit_models.utils import get_model, to_onnx
+
 
 @hydra.main(config_path="../../config", config_name="div2k_config", version_base=None)
 def main(cfg: DictConfig):
@@ -38,12 +44,23 @@ def main(cfg: DictConfig):
     
     torch.cuda.empty_cache()
 
+    # ModelCheckpoint コールバックの定義
+    checkpoint_callback = ModelCheckpoint(
+        monitor='val_psnr',  # ex) 'val_psnr', 'val_ssim'
+        dirpath=cfg.train.output_dir,
+        filename='best_checkpoint',  # ファイル名
+        save_top_k=1,  # 最も良いモデルのみ保存
+        mode='max',  # 'val_loss' なら 'min', 'val_psnr' や 'val_ssim' なら 'max'
+        save_weights_only=True,  # モデルの重みのみを保存
+    )
+
     # Setup trainer
     accelerator = "gpu" if torch.cuda.is_available() else "cpu"
     devices = 1 if torch.cuda.is_available() else None
     trainer = pl.Trainer(
         accelerator=accelerator,
         devices=devices,
+        callbacks=[checkpoint_callback],
         max_epochs=cfg.train.num_epoch,
         logger=wandb_logger,
         default_root_dir=cfg.train.log_dir
@@ -51,6 +68,23 @@ def main(cfg: DictConfig):
     
     # Start training
     trainer.fit(model, data_module)
+
+    model_params = {k: v for k, v in cfg.model.items() if k != "name"}
+    save_model = get_model(cfg.model.name, **model_params)
+
+    best_model_path = checkpoint_callback.best_model_path
+    if best_model_path:
+        save_model.load_state_dict(torch.load(best_model_path))
+        print(f"Model weights loaded from {best_model_path}")
+
+        output_dir_path = Path(cfg.train.output_dir)
+        if not output_dir_path.exists():
+            output_dir_path.mkdir(parents=True, exist_ok=True)
+            print(f"Directory {output_dir_path} created")
+
+        to_onnx(save_model, output_dir_path)
+    else:
+        print("The best model weights were not found")
 
 if __name__ == "__main__":
     main()

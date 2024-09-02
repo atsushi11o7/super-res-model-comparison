@@ -1,0 +1,13 @@
+# @package _global_
+
+defaults:
+  - override /model: MSRN
+  - override /loss: exppsnrloss
+  - override /optimizer: adamw
+
+train:
+  num_epoch: 100
+  output_dir: models/MSRN/100
+
+wandb:
+  name: "MSRN-100-epochs"

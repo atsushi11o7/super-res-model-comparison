@@ -1,0 +1,21 @@
+type: normal
+
+dataset:
+  train_data_path:
+    hr: "data/validation/original"  # "data/DIV2K/DIV2K_train_HR"
+    lr_dirs:
+      - "data/validation/0.25x"  # "data/DIV2K/DIV2K_train_LR_bicubic/X4"
+      #- "data/DIV2K/DIV2K_train_LR_mild"
+      #- "data/DIV2K/DIV2K_train_LR_wild"
+      #- "data/DIV2K/DIV2K_train_LR_difficult"
+      #- "data/DIV2K/DIV2K_train_LR_unknown/X4"
+      
+  val_data_path:
+    hr: "data/validation/original"  # "data/DIV2K/DIV2K_valid_HR"
+    lr_dirs:
+      - "data/validation/0.25x"  
+      #- "data/DIV2K/DIV2K_valid_LR_bicubic/X4"
+      #- "data/DIV2K/DIV2K_valid_LR_mild"
+      #- "data/DIV2K/DIV2K_valid_LR_wild"
+      #- "data/DIV2K/DIV2K_valid_LR_difficult"
+      #- "data/DIV2K/DIV2K_valid_LR_unknown/X4"

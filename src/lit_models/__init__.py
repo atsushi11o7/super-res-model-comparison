@@ -1,1 +1,2 @@
 from .lit_model import LitModel
+from .distillation_litmodel import LitModelWithDistillation

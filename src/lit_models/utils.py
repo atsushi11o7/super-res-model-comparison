@@ -5,14 +5,29 @@ from pathlib import Path
 from torchvision import transforms
 from src.models import (
     ESPCN,
-    EnhancedESPCNWithResiduals,
+    ESPCNWithResidualBlock,
+    ESPCNWithResidualBlockV2,
+    ESPCNWithResBlockV2AndAttention2,
+    ESPCNWithResBlockAndAttention,
+    ESPCNWithSimpleResBlock,
+    ESPCNWithDense,
+    ESPCNWithDenseAndChannelAttention,
+    ESPCNWithPixelShuffle2,
+    ESPCN2x2,
+    EnhancedESPCN,
+    ESPCNWithResidualBlockTTA,
     SRCNN,
     FSRCNN,
     FSRCNNWithPixelShuffle,
     FSRCNNWithAttention,
+    CARN,
+    IMDN,
+    HAN,
+    IDN,
     VDSR,
     SwinSR,
     Swin2SR,
+    MSRN,
 )
 
 
@@ -20,9 +35,39 @@ def get_model(name, **kwargs):
     if name == "ESPCN":
         return ESPCN(**kwargs)
 
-    elif name == "EnhancedESPCNWithResiduals":
-        return EnhancedESPCNWithResiduals(**kwargs)
+    elif name == "ESPCNWithResidualBlock":
+        return ESPCNWithResidualBlock(**kwargs)
+    
+    elif name == "ESPCNWithResidualBlockV2":
+        return ESPCNWithResidualBlockV2(**kwargs)
+    
+    elif name == "ESPCNWithResBlockV2AndAttention2":
+        return ESPCNWithResBlockV2AndAttention2(**kwargs)
+    
+    elif name == "ESPCNWithResBlockAndAttention":
+        return ESPCNWithResBlockAndAttention(**kwargs)
+    
+    elif name == "ESPCNWithSimpleResBlock":
+        return ESPCNWithSimpleResBlock(**kwargs)
 
+    elif name == "ESPCNWithDense":
+        return ESPCNWithDense(**kwargs)
+
+    elif name == "ESPCNWithDenseAndChannelAttention":
+        return ESPCNWithDenseAndChannelAttention(**kwargs)
+    
+    elif name == "ESPCNWithPixelShuffle2":
+        return ESPCNWithPixelShuffle2(**kwargs)
+    
+    elif name == "ESPCN2x2":
+        return ESPCN2x2(**kwargs)
+    
+    elif name == "ESPCNWithResidualBlockTTA":
+        return ESPCNWithResidualBlockTTA(**kwargs)
+    
+    elif name == "EnhancedESPCN":
+        return EnhancedESPCN(**kwargs)
+    
     elif name == "SRCNN":
         return SRCNN(**kwargs)
 
@@ -35,6 +80,18 @@ def get_model(name, **kwargs):
     elif name == "FSRCNNWithAttention":
         return FSRCNNWithAttention(**kwargs)
 
+    elif name == "CARN":
+        return CARN(**kwargs)
+
+    elif name == "IMDN":
+        return IMDN(**kwargs)
+
+    elif name == "HAN":
+        return HAN(**kwargs)
+
+    elif name == "IDN":
+        return IDN(**kwargs)
+
     elif name == "VDSR":
         return VDSR(**kwargs)
 
@@ -43,6 +100,9 @@ def get_model(name, **kwargs):
 
     elif name == "Swin2SR":
         return Swin2SR(**kwargs)
+    
+    elif name == "MSRN":
+        return MSRN(**kwargs)
 
     else:
         raise ValueError(f"Unsupported model: {name}")

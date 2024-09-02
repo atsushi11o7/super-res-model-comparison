@@ -4,7 +4,7 @@ defaults:
   - override /loss: mseloss
 
 train:
-  output_dir: models/espcn/mse_40_nt
+  output_dir: models/espcn/ipe_6000
 
 wandb:
-  name: "espcn-40-epochs"
+  name: "espcn-20-epochs"

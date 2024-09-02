@@ -1,0 +1,11 @@
+# @package _global_
+
+defaults:
+  - override /model: espcn_rb_ca
+
+train:
+  num_epoch: 150
+  output_dir: models/espcn_rb_ca/150
+
+wandb:
+  name: "espcn-150-epochs"

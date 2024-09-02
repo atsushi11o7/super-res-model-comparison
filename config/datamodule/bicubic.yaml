@@ -1,0 +1,8 @@
+type: bicubic
+
+dataset:
+  train_data_path: 
+    - "data/train"
+    - "data/DIV2K/DIV2K_train_HR"
+  original_val_data_path: "data/validation/original"
+  quarter_val_data_path: "data/validation/0.25x"
