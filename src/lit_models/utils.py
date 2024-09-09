@@ -27,7 +27,6 @@ from src.models import (
     VDSR,
     SwinSR,
     Swin2SR,
-    MSRN,
 )
 
 
@@ -100,9 +99,6 @@ def get_model(name, **kwargs):
 
     elif name == "Swin2SR":
         return Swin2SR(**kwargs)
-    
-    elif name == "MSRN":
-        return MSRN(**kwargs)
 
     else:
         raise ValueError(f"Unsupported model: {name}")
